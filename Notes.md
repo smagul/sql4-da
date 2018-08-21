@@ -14,6 +14,8 @@
         - [Quiz: Statements](#quiz-statements)
         - [SELECT & FROM](#select--from)
         - [Formatting Best Practices](#formatting-best-practices)
+        - [LIMIT](#limit)
+        - [ORDER BY**](#order-by)
 
 <!-- /TOC -->
 
@@ -94,7 +96,7 @@ The key to SQL is understanding **statements.** A few statements include:
 
 - **Capitalization.** You may have noticed that we have been capitalizing SELECT and FROM, while we leave table and column names lowercase. This is a common formatting convention. It is common practice to capitalize commands (SELECT, FROM), and keep everything else in your query lowercase. This makes queries easier to read, which will matter more as you write more complex queries. For now, it is just a good habit to start getting into.
 - **Avoid Spaces in Table and Variable Names.** It is common to use underscores and avoid spaces in column names. It is a bit annoying to work with spaces in SQL. In Postgres if you have spaces in column or table names, you need to refer to these columns/tables with double quotes around them (Ex: FROM "Table Name" as opposed to FROM table_name). In other environments, you might see this as square brackets instead (Ex: FROM [Table Name]).
-- **Use White Space in Queries.** SQL queries ignore spaces, so you can add as many spaces and blank lines between code as you want, and the queries are the same. This query 
+- **Use White Space in Queries.** SQL queries ignore spaces, so you can add as many spaces and blank lines between code as you want, and the queries are the same. This query
 
 ```sql
 SELECT account_id FROM orders
@@ -129,3 +131,22 @@ However, I would again urge you to follow the conventions outlined earlier in te
 SELECT account_id
 FROM orders;
 ```
+
+### LIMIT
+
+We have already seen the **SELECT** (to choose columns) and **FROM** (to choose tables) statements. The **LIMIT** statement is useful when you want to see just the first few rows of a table. This can be much faster for loading than if we load the entire dataset.  
+The **LIMIT** command is always the very last part of a query. An example of showing just the first 10 rows of the orders table with all of the columns might look like the following:
+
+```sql
+SELECT *
+FROM orders
+LIMIT 10;
+```
+
+We could also change the number of rows by changing the 10 to any other number of rows.
+
+### ORDER BY**
+
+The **ORDER BY** statement allows us to order our table by any row. If you are familiar with Excel, this is similar to the sorting you can do with filters.  
+The **ORDER BY** statement is always after the **SELECT** and **FROM** statements, but it is before the **LIMIT** statement. As you learn additional commands, the order of these statements will matter more. If we are using the **LIMIT** statement, it will always appear last.  
+`Pro Tip`: Remember DESC can be added after the column in your **ORDER BY** statement to sort in descending order, as the default is to sort in ascending order.  
