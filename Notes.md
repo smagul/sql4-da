@@ -15,7 +15,11 @@
         - [SELECT & FROM](#select--from)
         - [Formatting Best Practices](#formatting-best-practices)
         - [LIMIT](#limit)
-        - [ORDER BY**](#order-by)
+        - [ORDER BY](#order-by)
+        - [WHERE](#where)
+        - [WHERE with Non-Numeric Data](#where-with-non-numeric-data)
+        - [Arithmetic Operators](#arithmetic-operators)
+        - [Introduction to Logical Operators](#introduction-to-logical-operators)
 
 <!-- /TOC -->
 
@@ -145,8 +149,51 @@ LIMIT 10;
 
 We could also change the number of rows by changing the 10 to any other number of rows.
 
-### ORDER BY**
+### ORDER BY
 
 The **ORDER BY** statement allows us to order our table by any row. If you are familiar with Excel, this is similar to the sorting you can do with filters.  
 The **ORDER BY** statement is always after the **SELECT** and **FROM** statements, but it is before the **LIMIT** statement. As you learn additional commands, the order of these statements will matter more. If we are using the **LIMIT** statement, it will always appear last.  
 `Pro Tip`: Remember DESC can be added after the column in your **ORDER BY** statement to sort in descending order, as the default is to sort in ascending order.  
+We can **ORDER BY** more than one column at a time. The statement sorts according to columns listed from left first and those listed on the right after that. We still have the ability to flip the way we order using DESC.
+
+### WHERE
+
+**WHERE** - allows you to filter a set of results based on specific criteria.  
+Common symbols used within **WHERE** statements include:
+
+1. \> (greater than)  
+2. < (less than)  
+3. \>= (greater than or equal to)  
+4. <= (less than or equal to)  
+5. = (equal to)  
+6. != (not equal to)  
+
+### WHERE with Non-Numeric Data
+
+The **WHERE** statement can also be used with non-numerical data. We can use the `=` and `!=` operators here. You also need to be sure to use single quotes (just be careful if you have quotes in the original text) with the text data.  
+Commonly when we are using **WHERE** with non-numeric data fields, we use the **LIKE**, **NOT**, or **IN** operators.  
+
+### Arithmetic Operators
+
+**Derived Columns.** Creating a new column that is a combination of existing columns is known as a **derived** column.  
+Common operators include:
+
+1. \* (Multiplication)
+2. \+ (Addition)
+3. \- (Subtraction)
+4. / (Division)
+
+**Order of Operations. (PEMDAS)** The following two statements have very different end results:  
+
+1. Standard_qty / standard_qty + gloss_qty + poster_qty
+2. standard_qty / (standard_qty + gloss_qty + poster_qty)
+
+### Introduction to Logical Operators
+
+**Logical Operators** include:
+
+1. **LIKE.** This allows you to perform operations similar to using **WHERE** and `=`, but for cases when you might **not** know **exactly** what you are looking for.  
+2. **IN.** This allows you to perform operations similar to using **WHERE** and `=`, but for more than one condition.
+3. **NOT.** This is used with **IN** and **LIKE** to select all of the rows **NOT LIKE** or **NOT IN** a certain condition.
+4. **AND & BETWEEN.** These allow you to combine operations where all combined conditions must be true.
+5. **OR.** This allow you to combine operations where at least one of the combined conditions must be true.
