@@ -20,6 +20,9 @@
         - [WHERE with Non-Numeric Data](#where-with-non-numeric-data)
         - [Arithmetic Operators](#arithmetic-operators)
         - [Introduction to Logical Operators](#introduction-to-logical-operators)
+        - [LIKE](#like)
+        - [IN](#in)
+        - [NOT](#not)
 
 <!-- /TOC -->
 
@@ -197,3 +200,19 @@ Common operators include:
 3. **NOT.** This is used with **IN** and **LIKE** to select all of the rows **NOT LIKE** or **NOT IN** a certain condition.
 4. **AND & BETWEEN.** These allow you to combine operations where all combined conditions must be true.
 5. **OR.** This allow you to combine operations where at least one of the combined conditions must be true.
+
+### LIKE
+
+The **LIKE** operator is extremely useful for working with text. You will use **LIKE** within a **WHERE** clause. The **LIKE** operator is frequently used with `%`. The `%` tells us that we might want any number of characters leading up to a particular set of characters or following a certain set of characters. Remember you will need to use single quotes for the text you pass to the **LIKE** operator, because of this lower and uppercase letters are not the same within the string. Searching for **'T'** is not the same as searching for **'t'.** In other SQL environments (outside the classroom), you can use either single or double quotes.
+
+### IN
+
+The **IN** operator allows you to filter data based on several possible values. The **IN** operator is useful for working with both numeric and text columns. This operator allows you to use an `=`, but for more than one item of that particular column. We can check one, two or many column values for which we want to pull data, but all within the same query.  
+**Pro Tip:** "IN" requires single quotation marks around non-numerical data.  
+**Pro Tip:** You have to put a `comma` in between each pair of distinct values.  
+**Expert Tip.** In most SQL environments, you can use single or double quotation marks - and you may NEED to use double quotation marks if you have an apostrophe within the text you are attempting to pull. In the work spaces in the classroom, note you can include an apostrophe by putting two single quotes together. Example `Macy's` in our work space would be `'Macy"s'`.  
+
+### NOT
+
+Provides the inverse results for **IN**, **LIKE**, **AND** similar operators.  
+The **NOT** operator is an extremely useful operator for working with the previous two operators we introduced: **IN** and **LIKE**. By specifying **NOT LIKE** or **NOT IN**, we can grab all of the rows that do not meet a particular criteria.
