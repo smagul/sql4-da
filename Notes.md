@@ -23,6 +23,10 @@
         - [LIKE](#like)
         - [IN](#in)
         - [NOT](#not)
+        - [AND](#and)
+        - [BETWEEN Operator](#between-operator)
+        - [OR](#or)
+        - [Recap](#recap)
 
 <!-- /TOC -->
 
@@ -216,3 +220,60 @@ The **IN** operator allows you to filter data based on several possible values. 
 
 Provides the inverse results for **IN**, **LIKE**, **AND** similar operators.  
 The **NOT** operator is an extremely useful operator for working with the previous two operators we introduced: **IN** and **LIKE**. By specifying **NOT LIKE** or **NOT IN**, we can grab all of the rows that do not meet a particular criteria.
+
+### AND
+
+The **AND** operator is used within a **WHERE** statement to consider more than one logical clause at a time. Each time you link a new statement with an **AND**, you will need to specify the column you are interested in looking at. You may link as many statements as you would like to consider at the same time. This operator works with all of the operations we have seen so far including arithmetic operators (`+`, `*`, `-`, `/`). **LIKE, IN**, and **NOT** logic can also be linked together using the **AND** operator.  
+**Pro Tip:** Filter based on multiple criteria using "AND".
+
+### BETWEEN Operator
+
+Sometimes we can make a cleaner statement using **BETWEEN** than we can using **AND**. Particularly this is true when we are using the same column for different parts of our **AND** statement.  
+Instead of writing :
+
+```sql
+WHERE column >= 6 AND column <= 10
+```
+
+we can instead write, equivalently:
+
+```sql
+WHERE column BETWEEN 6 AND 10
+```
+
+### OR
+
+Similar to the **AND** operator, the **OR** operator can combine multiple statements. Each time you link a new statement with an **OR**, you will need to specify the column you are interested in looking at. You may link as many statements as you would like to consider at the same time. This operator works with all of the operations we have seen so far including arithmetic operators (`+`, `*`, `-`, `/`), **LIKE, IN, NOT, AND,** and **BETWEEN** logic can all be linked together using the **OR** operator.  
+When combining multiple of these operations, we frequently might need to use *parentheses* to assure that logic we want to perform is being executed correctly.  
+**OR** can be combined with other operators by using parentheses.  
+
+### Recap
+
+Commands  
+
+| Statement | How to Use It               | Other Details                                         |
+| --------- | --------------------------- | ----------------------------------------------------- |
+| SELECT    | SELECT Col1, Col2, ...      | Provide the columns you want                          |
+| FROM      | FROM Table                  | Provide the table where the columns exist             |
+| LIMIT     | LIMIT 10                    | Limits based number of rows returned                  |
+| ORDER BY  | ORDER BY Col                | Orders table based on the column. Used with DESC.     |
+| WHERE     | WHERE Col > 5               | A conditional statement to filter your results        |
+| LIKE      | WHERE Col LIKE '%me%'       | Only pulls rows where column has 'me' within the text |
+| IN        | WHERE Col IN ('Y', 'N')     | A filter for only rows with column of 'Y' or 'N'      |
+| NOT       | WHERE Col NOT IN ('Y', 'N') | NOT is frequently used with LIKE and IN               |
+| AND       | WHERE Col1 > 5 AND Col2 < 3 | Filter rows where two or more conditions must be true |
+| OR        | WHERE Col1 > 5 OR Col2 < 3  | Filter rows where at least one condition must be true |
+| BETWEEN   | WHERE Col BETWEEN 3 AND 5   | Often easier syntax than using an AND                 |  
+
+Other Tips  
+Though SQL is **not case sensitive** (it doesn't care if you write your statements as all uppercase or lowercase). **The order of the key words does matter!** Using what you know so far, you will want to write your statements as:
+
+```sql
+SELECT col1, col2
+FROM table1
+WHERE col3  > 5 AND col4 LIKE '%os%'
+ORDER BY col5
+LIMIT 10;
+```
+
+Notice, you can retrieve different columns than those being used in the **ORDER BY** and **WHERE** statements. Assuming all of these column names existed in this way (`col1`, `col2`, `col3`, `col4`, `col5`) within a table called `table1`, this query would run just fine.
