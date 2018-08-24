@@ -27,6 +27,8 @@
         - [BETWEEN Operator](#between-operator)
         - [OR](#or)
         - [Recap](#recap)
+    - [Lesson 2: SQL Joins](#lesson-2-sql-joins)
+        - [Why Would We Want to Split Data Into Separate Tables](#why-would-we-want-to-split-data-into-separate-tables)
 
 <!-- /TOC -->
 
@@ -277,3 +279,27 @@ LIMIT 10;
 ```
 
 Notice, you can retrieve different columns than those being used in the **ORDER BY** and **WHERE** statements. Assuming all of these column names existed in this way (`col1`, `col2`, `col3`, `col4`, `col5`) within a table called `table1`, this query would run just fine.
+
+## Lesson 2: SQL Joins
+
+### Why Would We Want to Split Data Into Separate Tables
+
+**Joins:**
+
+1. Orders and accounts are different types of objects
+2. This allows queries to execute more quickly
+
+**Database Normalization.** When creating a database, it is really important to think about how data will be stored. This is known as **normalization**, and it is a huge part of most SQL classes. If you are in charge of setting up a new database, it is important to have a thorough understanding of database **normalization**.  
+There are essentially three ideas that are aimed at database normalization:
+
+1. Are the tables storing logical groupings of the data?  
+2. Can I make changes in a single location, rather than in many tables for the same information?  
+3. Can I access and manipulate data quickly and efficiently?
+
+However, most analysts are working with a database that was already set up with the necessary properties in place. As analysts of data, you don't really need to think too much about data **normalization.** You just need to be able to pull the data from the database, so you can start drawing insights.  
+
+The whole goal of **JOIN** statements is to allow us to pull from more than one table at a time.  
+Again - **JOIN**s are useful for allowing us to pull data from multiple tables. This is both simple and powerful all at the same time.  
+With the addition of the **JOIN** statement to our toolkit, we will also be adding the **ON** statement.  
+**JOIN**s tells query an additional table from which you would like to pull data.  
+**ON** specifies a logical statement to combine the table in from and **JOIN** statements

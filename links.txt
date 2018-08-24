@@ -1,3 +1,4 @@
 1. https://www.zippia.com/advice/what-jobs-use-sql/
 2. https://www.udacity.com/course/data-wrangling-with-mongodb--ud032
 3. https://www.digitalocean.com/community/tutorials/sqlite-vs-mysql-vs-postgresql-a-comparison-of-relational-database-management-systems
+4. https://www.itprotoday.com/microsoft-sql-server/sql-design-why-you-need-database-normalization
