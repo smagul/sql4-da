@@ -29,6 +29,7 @@
         - [Recap](#recap)
     - [Lesson 2: SQL Joins](#lesson-2-sql-joins)
         - [Why Would We Want to Split Data Into Separate Tables](#why-would-we-want-to-split-data-into-separate-tables)
+        - [ERD Reminder](#erd-reminder)
 
 <!-- /TOC -->
 
@@ -302,4 +303,8 @@ The whole goal of **JOIN** statements is to allow us to pull from more than one 
 Again - **JOIN**s are useful for allowing us to pull data from multiple tables. This is both simple and powerful all at the same time.  
 With the addition of the **JOIN** statement to our toolkit, we will also be adding the **ON** statement.  
 **JOIN**s tells query an additional table from which you would like to pull data.  
-**ON** specifies a logical statement to combine the table in from and **JOIN** statements
+**ON** specifies a logical statement to combine the table in from and **JOIN** statements  
+
+### ERD Reminder
+
+You might notice that the **PK** is associated with the first column in every table. The **PK** here stands for **primary key**. A primary key exists in every table, and it is a column that has a unique value for every row. `PK`, column is always **unique.** For this database it is always called `id`, but that is not true of all databases.
