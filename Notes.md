@@ -29,6 +29,7 @@
         - [Recap](#recap)
     - [Lesson 2: SQL Joins](#lesson-2-sql-joins)
         - [Why Would We Want to Split Data Into Separate Tables](#why-would-we-want-to-split-data-into-separate-tables)
+        - [ERD Reminder](#erd-reminder)
 
 <!-- /TOC -->
 
@@ -302,4 +303,86 @@ The whole goal of **JOIN** statements is to allow us to pull from more than one 
 Again - **JOIN**s are useful for allowing us to pull data from multiple tables. This is both simple and powerful all at the same time.  
 With the addition of the **JOIN** statement to our toolkit, we will also be adding the **ON** statement.  
 **JOIN**s tells query an additional table from which you would like to pull data.  
-**ON** specifies a logical statement to combine the table in from and **JOIN** statements
+**ON** specifies a logical statement to combine the table in from and **JOIN** statements  
+
+### ERD Reminder
+
+You might notice that the **PK** is associated with the first column in every table. The **PK** here stands for **primary key**. A primary key exists in every table, and it is a column that has a unique value for every row. `PK`, column is always **unique.** For this database it is always called `id`, but that is not true of all databases.  
+
+### Keys
+
+**Primary Key (PK).** A primary key is a **unique column** in a particular table. This is the first column in each of our tables. Here, those columns are all called `id`, but that doesn't necessarily have to be the name. **It is common that the primary key is the first column in our tables in most databases.**  
+**Foreign Key (FK).** A foreign key is when we see a **primary key in another table**.  
+
+![ERd](images/screen-shot-2017-08-10-at-8.23.48-pm.png)  
+
+**Primary - Foreign Key Link**  
+In the above image you can see that:
+
+1. The **region_id** is the foreign key.
+2. The region_id is **linked** to id - this is the primary-foreign key link that connects these two tables.
+3. The crow's foot shows that the **FK** can actually appear in many rows in the **sales_reps** table.
+4. While the single line is telling us that the **PK** shows that id appears only once per row in this table.  
+
+### Quiz: Primary - Foreign Key Relationship
+
+![Quiz](images/Quiz-Primary-Foreign-Key-Relationship.png)
+
+**Select all that are true for primary keys.**  
+
+1. There is one and only one of these columns in every table.  
+2. They are a column in a table.
+
+**Select all that are true of foreign keys.**
+
+1. They are always linked to a primary key.
+2. In the above database, every foreign key is associated with the crow-foot notation, which suggests it can appear multiple times in the column of a table.
+
+### Alias
+
+When we JOIN tables together, it is nice to give each table an **alias**. Frequently an alias is just the first letter of the table name. You actually saw something similar for column names in the **Arithmetic Operators** concept.
+
+Example:
+
+```sql
+FROM tablename AS t1
+JOIN tablename2 AS t2
+```
+
+Before, you saw something like:
+
+```sql
+SELECT col1 + col2 AS total, col3
+```
+
+Frequently, you might also see these statements **without the AS statement.** Each of the above could be written in the following way instead, and they would still produce the exact same results:
+
+```sql
+FROM tablename t1
+JOIN tablename2 t2
+```
+
+and
+
+```sql
+SELECT col1 + col2 total, col3
+```
+
+While aliasing tables is the most common use case. It can also be used to alias the columns selected to have the resulting table reflect a more readable name.
+
+Example:
+
+```sql
+SELECT t1.column1 aliasname, t2.column2 aliasname2
+FROM tablename AS t1
+JOIN tablename2 AS t2
+```
+
+### Quiz: JOIN Questions Part I
+
+ 1. The **ON** statement **should** always occur with the foreign key being equal to the primary key.
+ 2. **JOIN** statements allow us to pull data from multiple tables in a **SQL** database.
+ 3. You can use all of the commands we saw in the first lesson along with **JOIN** statements.
+ 4. Aliasing is common to shorten table names when we start **JOIN**ing multiple tables together.  
+
+ `Expert Tip` You have had a bit of an introduction to these **one-to-one** and **one-to-many** relationships when we introduced **PKs** and **FKs.** Notice, traditional databases do not allow for **many-to-many** relationships, as these break the schema down pretty quickly. A very good answer is provided [here](https://stackoverflow.com/questions/7339143/why-no-many-to-many-relationships).
