@@ -26,10 +26,18 @@
         - [AND](#and)
         - [BETWEEN Operator](#between-operator)
         - [OR](#or)
-        - [Recap](#recap)
+        - [Recap Lesson 1](#recap-lesson-1)
     - [Lesson 2: SQL Joins](#lesson-2-sql-joins)
         - [Why Would We Want to Split Data Into Separate Tables](#why-would-we-want-to-split-data-into-separate-tables)
         - [ERD Reminder](#erd-reminder)
+        - [Keys](#keys)
+        - [Quiz: Primary - Foreign Key Relationship](#quiz-primary---foreign-key-relationship)
+        - [Alias](#alias)
+        - [Quiz: JOIN Questions Part I](#quiz-join-questions-part-i)
+        - [JOIN Check In](#join-check-in)
+        - [Quiz: LEFT and RIGHT JOIN](#quiz-left-and-right-join)
+        - [JOINs and Filtering](#joins-and-filtering)
+        - [Recap Lesson 2](#recap-lesson-2)
 
 <!-- /TOC -->
 
@@ -250,7 +258,7 @@ Similar to the **AND** operator, the **OR** operator can combine multiple statem
 When combining multiple of these operations, we frequently might need to use *parentheses* to assure that logic we want to perform is being executed correctly.  
 **OR** can be combined with other operators by using parentheses.  
 
-### Recap
+### Recap Lesson 1
 
 Commands  
 
@@ -386,3 +394,67 @@ JOIN tablename2 AS t2
  4. Aliasing is common to shorten table names when we start **JOIN**ing multiple tables together.  
 
  `Expert Tip` You have had a bit of an introduction to these **one-to-one** and **one-to-many** relationships when we introduced **PKs** and **FKs.** Notice, traditional databases do not allow for **many-to-many** relationships, as these break the schema down pretty quickly. A very good answer is provided [here](https://stackoverflow.com/questions/7339143/why-no-many-to-many-relationships).
+
+### JOIN Check In
+
+```sql
+JOIN       = INNER JOIN
+LEFT JOIN  = LEFT INNER JOIN
+RIGHT JOIN = RIGHT INNER JOIN
+```
+
+### Quiz: LEFT and RIGHT JOIN
+
+1. A **LEFT JOIN** and **RIGHT JOIN** do the same thing if we change the tables that are in the **FROM** and **JOIN** statements.
+2. A **LEFT JOIN** will **at least** return all the rows that are in an **INNER JOIN.**
+3. **JOIN** and **INNER JOIN** are the same.
+4. A **LEFT OUTER JOIN** is the same as **LEFT JOIN.**
+
+```sql
+SELECT c.countryid, c.countryName, s.stateName
+FROM Country c
+LEFT JOIN State s
+ON c.countryid = s.countryid;
+```
+
+![LEFT JOIN](images/left-join.png)
+
+### JOINs and Filtering
+
+```sql
+# 1
+SELECT orders.*, accounts.*
+  FROM orders
+  LEFT JOIN accounts
+    ON orders.account_id = account.id
+ WHERE accounts.sales_rep_id = 321500;
+
+# 2
+   same as above ...
+   AND accounts.sales_rep_id = 321500;
+```
+
+A simple rule to remember this is that, when the database executes this query, it executes the join and everything in the **ON** clause first. Think of this as building the new result set. That result set is then filtered using the **WHERE** clause.  
+The fact that this example is a left join is important. Because inner joins only return the rows for which the two tables match, moving this filter to the **ON** clause of an inner join will produce the same result as keeping it in the **WHERE** clause.  
+
+### Recap Lesson 2
+
+**Primary and Foreign Keys**  
+You learned a key element for **JOIN**ing tables in a database has to do with primary and foreign keys:
+
+- **primary keys** - are unique for every row in a table. These are generally the first column in our database (like you saw with the `id` column for every table in the Parch & Posey database).
+- **foreign keys** - are the **primary key** appearing in another table, which allows the rows to be non-unique.
+
+Choosing the set up of data in our database is very important, but not usually the job of a data analyst. This process is known as **Database Normalization.**  
+
+**JOINs**  
+In this lesson, you learned how to combine data from multiple tables using **JOINs**. The three `JOIN` statements you are most likely to use are:
+
+- **JOIN** - an INNER JOIN that only pulls data that exists in both tables.
+- **LEFT JOIN** - a way to pull all of the rows from the table in the `FROM` even if they do not exist in the `JOIN` statement.
+- **RIGHT JOIN** - a way to pull all of the rows from the table in the `JOIN` even if they do not exist in the `FROM` statement.
+
+There are a few more advanced `JOIN`s that we did not cover here, and they are used in very specific use cases. [UNION and UNION ALL](https://www.w3schools.com/sql/sql_union.asp), [CROSS JOIN](https://www.w3resource.com/sql/joins/cross-join.php), and the tricky [SELF JOIN](https://www.w3schools.com/sql/sql_join_self.asp). These are more advanced than this course will cover, but it is useful to be aware that they exist, as they are useful in special cases.
+
+**Alias**
+You learned that you can alias tables and columns using **AS** or not using it. This allows you to be more efficient in the number of characters you need to write, while at the same time you can assure that your column headings are informative of the data in your table.
