@@ -38,6 +38,10 @@
         - [Quiz: LEFT and RIGHT JOIN](#quiz-left-and-right-join)
         - [JOINs and Filtering](#joins-and-filtering)
         - [Recap Lesson 2](#recap-lesson-2)
+    - [Lesson 3: SQL Aggregations](#lesson-3-sql-aggregations)
+        - [Introduction to Aggregation](#introduction-to-aggregation)
+        - [NULLs](#nulls)
+        - [COUNT](#count)
 
 <!-- /TOC -->
 
@@ -457,4 +461,37 @@ In this lesson, you learned how to combine data from multiple tables using **JOI
 There are a few more advanced `JOIN`s that we did not cover here, and they are used in very specific use cases. [UNION and UNION ALL](https://www.w3schools.com/sql/sql_union.asp), [CROSS JOIN](https://www.w3resource.com/sql/joins/cross-join.php), and the tricky [SELF JOIN](https://www.w3schools.com/sql/sql_join_self.asp). These are more advanced than this course will cover, but it is useful to be aware that they exist, as they are useful in special cases.
 
 **Alias**
-You learned that you can alias tables and columns using **AS** or not using it. This allows you to be more efficient in the number of characters you need to write, while at the same time you can assure that your column headings are informative of the data in your table.
+You learned that you can alias tables and columns using **AS** or not using it. This allows you to be more efficient in the number of characters you need to write, while at the same time you can assure that your column headings are informative of the data in your table.  
+
+## Lesson 3: SQL Aggregations
+
+### Introduction to Aggregation
+
+**CONCEPT 1** Left, Right, and Inner JOINs  
+**CONCEPT 2** Filter results with WHERE and ON clauses  
+
+**COUNT** - counts how many rows are in a particular column.  
+**SUM** - add all values in a particular column.  
+**MIN and MAX** - returns the lowest and highest values in a particular column.  
+**AVERAGE** - calculates the average of all the values in a particular column.  
+
+### NULLs
+
+**NULLS** are a datatype that specifies where no data exists in SQL. They are often ignored in our aggregation functions, which you will get a first look at in the next concept using COUNT.  
+
+Notice that **NULL**s are *different than a zero* - they are cells where *data does not exist.*
+
+When identifying NULLs in a WHERE clause, we write **IS NULL** or **IS NOT NULL.** We don't use `=`, because NULL isn't considered a value in SQL. Rather, it is a property of the data.  
+
+**NULLs - Expert Tip**  
+There are two common ways in which you are likely to encounter NULLs:
+
+- NULLs frequently occur when performing a LEFT or RIGHT JOIN. You saw in the last lesson - when some rows in the left table of a left join are not matched with rows in the right table, those rows will contain some NULL values in the result set.
+- NULLs can also occur from simply missing data in our database.  
+
+### COUNT
+
+**COUNT** can help us identify the number of **NULL** values in any particular column.  
+If the **COUNT** result of a column matches the number of rows in a table, there are no **NULL**s in the column.  
+If the **COUNT** result of a column is less than the number of rows in the table, we know the difference is the number of **NULL**s.  
+We can use the **COUNT** function on any column in a table.  
