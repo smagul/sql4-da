@@ -42,6 +42,10 @@
         - [Introduction to Aggregation](#introduction-to-aggregation)
         - [NULLs](#nulls)
         - [COUNT](#count)
+        - [SUM](#sum)
+        - [MIN and MAX](#min-and-max)
+        - [AVG](#avg)
+        - [GROUP BY](#group-by)
 
 <!-- /TOC -->
 
@@ -495,3 +499,38 @@ There are two common ways in which you are likely to encounter NULLs:
 If the **COUNT** result of a column matches the number of rows in a table, there are no **NULL**s in the column.  
 If the **COUNT** result of a column is less than the number of rows in the table, we know the difference is the number of **NULL**s.  
 We can use the **COUNT** function on any column in a table.  
+
+### SUM
+
+You can't use `SUM(*)` the way you use `COUNT(*)`.  
+**SUM** is only for columns that have quantitative data. **COUNT** works on any column.  
+**SUM** treats **NULL** as 0.  
+**Aggregation Reminder**  
+An important thing to remember: **aggregators only aggregate vertically - the values of a column.** If you want to perform a calculation across rows, you would do this with ![simple arithmetic](https://community.modeanalytics.com/sql/tutorial/sql-operators/#arithmetic-in-sql).  
+
+### MIN and MAX
+
+**MIN** and **MAX** are similar to other aggregators in that they ignore `NULL` values.  
+**Expert Tip:**  Functionally, `MIN` and `MAX` are similar to `COUNT` in that they can be used on non-numerical columns. Depending on the column type, `MIN` will return the lowest number, earliest date, or non-numerical value as early in the alphabet as possible. As you might suspect, `MAX` does the opposite—it returns the highest number, the latest date, or the non-numerical value closest alphabetically to `"Z."`
+
+### AVG
+
+Similar to other software **AVG** returns the mean of the data - that is the sum of all of the values in the column divided by the number of values in a column. This aggregate function again ignores the NULL values in both the numerator and the denominator.  
+If you want to count `NULL`s as zero, you will need to use `SUM` and `COUNT`. However, this is probably not a good idea if the `NULL` values truly just represent unknown values for a cell.  
+**MEDIAN - Expert Tip**  
+One quick note that a median might be a more appropriate measure of center for this data, but finding the median happens to be a pretty difficult thing to get using SQL alone — so difficult that finding a median is occasionally asked as an interview question.
+
+### GROUP BY
+
+The key takeaways here:
+
+- **GROUP BY** can be used to aggregate data within subsets of the data. For example, grouping for different accounts, different regions, or different sales representatives.
+- Any column in the **SELECT** statement that is not within an aggregator must be in the **GROUP BY** clause.
+- The **GROUP BY** always goes between **WHERE** and **ORDER BY**.
+- **ORDER BY** works like **SORT** in spreadsheet software.
+- Allows creating segments that will aggregate independent from one another.
+
+**GROUP BY - Expert Tip**  
+Before we dive deeper into aggregations using GROUP BY statements, it is worth noting that SQL evaluates the aggregations before the LIMIT clause. If you don’t group by any columns, you’ll get a 1-row result—no problem there. If you group by a column with enough unique values that it exceeds the LIMIT number, the aggregates will be calculated, and then some rows will simply be omitted from the results.  
+
+This is actually a nice way to do things because you know you’re going to get the correct aggregates. If SQL cuts the table down to 100 rows, then performed the aggregations, your results would be substantially different. The above query’s results exceed 100 rows, so it’s a perfect example.

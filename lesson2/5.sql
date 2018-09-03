@@ -1,4 +1,4 @@
-### JOINs and Filtering Example
+### Check In
 
 /* 1. Provide a table that provides the region for each sales_rep along with their associated accounts. 
 This time only for the Midwest region. Your final table should include 
