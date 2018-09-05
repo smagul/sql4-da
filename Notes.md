@@ -46,6 +46,7 @@
         - [MIN and MAX](#min-and-max)
         - [AVG](#avg)
         - [GROUP BY](#group-by)
+        - [DISTINCT](#distinct)
 
 <!-- /TOC -->
 
@@ -534,3 +535,31 @@ The key takeaways here:
 Before we dive deeper into aggregations using GROUP BY statements, it is worth noting that SQL evaluates the aggregations before the LIMIT clause. If you don’t group by any columns, you’ll get a 1-row result—no problem there. If you group by a column with enough unique values that it exceeds the LIMIT number, the aggregates will be calculated, and then some rows will simply be omitted from the results.  
 
 This is actually a nice way to do things because you know you’re going to get the correct aggregates. If SQL cuts the table down to 100 rows, then performed the aggregations, your results would be substantially different. The above query’s results exceed 100 rows, so it’s a perfect example.
+
+`Pro Tip:` **GROUP BY** and **ORDER BY** can be used with multiple columns in the same query.  
+`Pro Tip:` The order in the **ORDER BY** determines which column is ordered on *first*.  
+`Pro Tip:` You can order **DESC** for any column in your **ORDER BY**  
+
+**GROUP BY - Expert Tips**  
+The order of column names in your GROUP BY clause doesn’t matter—the results will be the same regardless. If we run the same query and reverse the order in the **GROUP BY** clause, you can see we get the same results.  
+As with **ORDER BY**, you can substitute numbers for column names in the GROUP BY clause. It’s generally recommended to do this only when you’re grouping many columns, or if something else is causing the text in the **GROUP BY** clause to be excessively long.  
+A reminder here that any column that is not within an aggregation must show up in your GROUP BY statement. If you forget, you will likely get an error. However, in the off chance that your query does work, you might not like the results!  
+
+### DISTINCT
+
+DISTINCT is always used in **SELECT** statements, and it provides the unique rows for all columns written in the `SELECT` statement. Therefore, you only use **DISTINCT** *once* in any particular `SELECT` statement. You could write:
+
+```sql
+SELECT DISTINCT column1, column2, column3
+FROM table1;
+```
+
+which would return the unique (or **DISTINCT**) rows across all three columns. You would not write:
+
+```sql
+SELECT DISTINCT column1, DISTINCT column2, DISTINCT column3
+FROM table1;
+```
+
+You can think of **DISTINCT** the same way you might think of the statement `"unique"`.  
+**DISTINCT - Expert Tip:** It’s worth noting that using **DISTINCT**, particularly in aggregations, can slow your queries down quite a bit.
