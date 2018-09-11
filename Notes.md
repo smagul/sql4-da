@@ -47,6 +47,8 @@
         - [AVG](#avg)
         - [GROUP BY](#group-by)
         - [DISTINCT](#distinct)
+        - [HAVING](#having)
+        - [Quiz: HAVING](#quiz-having)
 
 <!-- /TOC -->
 
@@ -563,3 +565,17 @@ FROM table1;
 
 You can think of **DISTINCT** the same way you might think of the statement `"unique"`.  
 **DISTINCT - Expert Tip:** It’s worth noting that using **DISTINCT**, particularly in aggregations, can slow your queries down quite a bit.
+
+### HAVING
+
+`HAVING - Expert Tip` HAVING is the “clean” way to filter a query that has been aggregated, but this is also commonly done using a [subquery](https://community.modeanalytics.com/sql/tutorial/sql-subqueries/). Essentially, any time you want to perform a WHERE on an element of your query that was created by an aggregate, you need to use HAVING instead.
+
+### Quiz: HAVING
+
+Often there is confusion about the difference between WHERE and HAVING. Select all the statements that are true regarding HAVING and WHERE statements.
+
+- `WHERE` subsets the returned data based on a logical condition.
+- `WHERE` appears after the `FROM`, `JOIN`, and `ON` clauses, but before `GROUP BY`.
+- `HAVING` appears after the `GROUP BY` clause, but before the `ORDER BY` clause.
+- `HAVING` is like `WHERE`, but it works on logical statements involving aggregations.
+
