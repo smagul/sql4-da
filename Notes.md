@@ -49,6 +49,10 @@
         - [DISTINCT](#distinct)
         - [HAVING](#having)
         - [Quiz: HAVING](#quiz-having)
+        - [DATE Functions](#date-functions)
+        - [DATE Functions II](#date-functions-ii)
+        - [CASE Statements](#case-statements)
+    - [Lesson 4: SQL Subqueries & Temporary Tables](#lesson-4-sql-subqueries--temporary-tables)
 
 <!-- /TOC -->
 
@@ -285,7 +289,7 @@ Commands
 | NOT       | WHERE Col NOT IN ('Y', 'N') | NOT is frequently used with LIKE and IN               |
 | AND       | WHERE Col1 > 5 AND Col2 < 3 | Filter rows where two or more conditions must be true |
 | OR        | WHERE Col1 > 5 OR Col2 < 3  | Filter rows where at least one condition must be true |
-| BETWEEN   | WHERE Col BETWEEN 3 AND 5   | Often easier syntax than using an AND                 |  
+| BETWEEN   | WHERE Col BETWEEN 3 AND 5   | Often easier syntax than using an AND                 |
 
 Other Tips  
 Though SQL is **not case sensitive** (it doesn't care if you write your statements as all uppercase or lowercase). **The order of the key words does matter!** Using what you know so far, you will want to write your statements as:
@@ -579,3 +583,86 @@ Often there is confusion about the difference between WHERE and HAVING. Select a
 - `HAVING` appears after the `GROUP BY` clause, but before the `ORDER BY` clause.
 - `HAVING` is like `WHERE`, but it works on logical statements involving aggregations.
 
+### DATE Functions
+
+**GROUP**ing **BY** a date column is not usually very useful in SQL, as these columns tend to have transaction data down to a second. Keeping date information at such a granular data is both a blessing and a curse, as it gives really precise information (a blessing), but it makes grouping information together directly difficult (a curse).  
+Lucky for us, there are a number of built in SQL functions that are aimed at helping us improve our experience in working with dates.  
+
+![DATE Functions](images/DATE-Functions-1.jpg)
+
+![DATE Functions](images/DATE-Functions-2.jpg)
+
+In [this link you can find the formatting of dates around the world, as referenced in the picture](https://en.wikipedia.org/wiki/Date_format_by_country).
+
+### DATE Functions II
+
+**DATE_TRUNC** allows you to truncate your date to a particular part of your date-time column. Common trunctions are `day`, `month`, and `year`. [Here](https://blog.modeanalytics.com/date-trunc-sql-timestamp-function-count-on/) is a great blog post by Mode Analytics on the power of this function.  
+**DATE_PART** can be useful for pulling a specific portion of a date, but notice pulling `month` or day of the week (`dow`) means that you are no longer keeping the years in order. Rather you are grouping for certain components regardless of which year they belonged in.  
+For additional functions you can use with dates, check out the documentation [here](https://www.postgresql.org/docs/9.1/static/functions-datetime.html), but the **DATE_TRUNC** and **DATE_PART** functions definitely give you a great start!  
+You can reference the columns in your select statement in **GROUP BY** and **ORDER BY** clauses with numbers that follow the order they appear in the select statement. For example
+
+```sql
+SELECT standard_qty, COUNT(*)
+  FROM orders
+ GROUP BY 1 (this 1 refers to standard_qty since it is the first of the columns included in the select statement)
+ ORDER BY 1 (this 1 refers to standard_qty since it is the first of the columns included in the select statement)
+```
+
+`Pro Tip:` `DOW` pulls the day of the week with 0 as SUNDAY and 6 as SATURDAY.
+
+DATE_TRUNC table
+
+| Result              | Input                                     |
+| ------------------- | ----------------------------------------- |
+| 2017-04-01 12:15:01 | DATE_TRUNC('second', 2017-04-01 12:15:01) |
+| 2017-04-01 00:00:00 | DATE_TRUNC('day', 2017-04-01 12:15:01)    |
+| 2017-04-01 00:00:00 | DATE_TRUNC('month', 2017-04-01 12:15:01)  |
+| 2017-01-01 00:00:00 | DATE_TRUNC('year', 2017-04-01 12:15:01)   |
+
+DATE_PART table
+
+| Result | Input                                    |
+| ------ | ---------------------------------------- |
+| 1      | DATE_PART('second', 2017-04-01 12:15:01) |
+| 1      | DATE_PART('day', 2017-04-01 12:15:01)    |
+| 4      | DATE_PART('month', 2017-04-01 12:15:01)  |
+| 2017   | DATE_PART('year', 2017-04-01 12:15:01)   |
+
+### CASE Statements
+
+`CASE - Expert Tip`  
+
+- The CASE statement always goes in the SELECT clause.
+- CASE must include the following components: WHEN, THEN, and END. ELSE is an optional component to catch cases that didn’t meet any of the other previous CASE conditions.
+- You can make any conditional statement using any conditional operator (like [WHERE](https://community.modeanalytics.com/sql/tutorial/sql-where/)) between WHEN and THEN. This includes stringing together multiple conditional statements using AND and OR.
+- You can include multiple WHEN statements, as well as an ELSE statement again, to deal with any unaddressed conditions.
+
+`Derive` - take data from existing columns and modify them.  
+`Pro Tip:` "CASE" statement handles "IF" "THEN" logic. "CASE" statements must end with the word "END".  
+`ELSE` - captures values not specified in "WHEN" and "THEN" statements.  
+
+**Example**  
+Create a column that divides the `standard_amt_usd` by the `standard_qty` to find the unit price for standard paper for each order. Limit the results to the first 10 orders, and include the `id` and `a`ccount_id` fields. **NOTE - you will be thrown an error with the correct solution to this question. This is for a division by zero.**  
+
+Let's see how we can use the `CASE` statement to get around this error.
+
+```sql
+SELECT id, account_id, standard_amt_usd/standard_qty AS unit_price
+  FROM orders
+ LIMIT 10;
+```
+
+Now, let's use a `CASE` statement. This way any time the `standard_qty` is zero, we will return 0, and otherwise we will return the `unit_price`.
+
+```sql
+SELECT id, account_id,
+       CASE WHEN standard_qty = 0 AND standard_qty IS NULL THEN 0
+            ELSE standard_amt_usd/standard_qty
+        END AS unit_price
+  FROM orders
+ LIMIT 10;
+```
+
+## Lesson 4: SQL Subqueries & Temporary Tables
+
+`Subqueries` - allow you to answer more complex questions than you can with a single database table.
