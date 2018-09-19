@@ -53,6 +53,9 @@
         - [DATE Functions II](#date-functions-ii)
         - [CASE Statements](#case-statements)
     - [Lesson 4: SQL Subqueries & Temporary Tables](#lesson-4-sql-subqueries--temporary-tables)
+        - [Subquery Formatting](#subquery-formatting)
+        - [More on Subqueries](#more-on-subqueries)
+        - [WITH (Common Table Expression)](#with-common-table-expression)
 
 <!-- /TOC -->
 
@@ -665,4 +668,35 @@ SELECT id, account_id,
 
 ## Lesson 4: SQL Subqueries & Temporary Tables
 
-`Subqueries` - allow you to answer more complex questions than you can with a single database table.
+`Subqueries` - allow you to answer more complex questions than you can with a single database table.  
+
+Mark all of the below that are true regarding writing your subquery.
+
+- The original query goes in the **FROM** statement.  
+- An `*` is used in the **SELECT** statement to pull all of the data from the original query.  
+- You **MUST** use an alias for the table you nest within the outer query.
+
+### Subquery Formatting
+
+```sql
+SELECT *
+FROM (SELECT DATE_TRUNC('day',occurred_at) AS day,
+                channel, COUNT(*) as events
+      FROM web_events
+      GROUP BY 1,2
+      ORDER BY 3 DESC) sub
+GROUP BY day, channel, events
+ORDER BY 2 DESC;
+```
+
+### More on Subqueries
+
+In the first subquery you wrote, you created a table that you could then query again in the **FROM** statement. However, if you are only returning a single value, you might use that value in a logical statement like **WHERE, HAVING,** or even **SELECT** - the value could be nested within a **CASE** statement.
+
+`Expert Tip:`  
+Note that you should not include an alias when you write a subquery in a conditional statement. This is because the subquery is treated as an individual value (or set of values in the **IN** case) rather than as a table.  
+Also, notice the query here compared a single value. If we returned an entire column **IN** would need to be used to perform a logical argument. If we are returning an entire table, then we must use an **ALIAS** for the table, and perform additional logic on the entire table.
+
+### WITH (Common Table Expression)
+
+The **WITH** statement is often called a **Common Table Expression** or **CTE.** Though these expressions serve the exact same purpose as subqueries, they are more common in practice, as they tend to be cleaner for a future reader to follow the logic.
